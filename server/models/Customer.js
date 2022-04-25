@@ -10,7 +10,7 @@ const customerSchema = new mongoose.Schema(
             type: String
         },
         
-        contact: {
+        customerContact: {
             type: String
         },
 
