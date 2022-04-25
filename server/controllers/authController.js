@@ -3,10 +3,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const onboard = async (req, res, next) => {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const email = req.body.email.trim().toLowerCase();
-
+    /**
+     * This controller create a new organization 
+     * and adds an admin user to the organization
+     */
     try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const email = req.body.email.trim().toLowerCase();
+
         // make sure the user does not exist already
         const user = await User.findOne({ email: email });
         // check if user exists
@@ -24,7 +28,7 @@ const onboard = async (req, res, next) => {
 
         // create a new user object
         await User.create({
-            username: req.body.name,
+            username: req.body.username,
             email: email,
             password: hashedPassword,
             privilegeLevel: 1,

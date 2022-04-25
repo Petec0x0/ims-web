@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 require('dotenv').config();
+const verifyUser = require('./middlewares/verifyUser');
 const AuthRoute = require('./routes/auth');
+const BrandRoute = require('./routes/brand');
 
 const app = express();
 
@@ -44,6 +46,7 @@ db.once('open', () => {
 
 // Routes
 app.use('/api/auth', AuthRoute);
+app.use('/api/brand', verifyUser, BrandRoute);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
