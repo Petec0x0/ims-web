@@ -6,7 +6,7 @@ const organizationSchema = new mongoose.Schema(
             type: String
         },
 
-        adminEmail: {
+        creatorEmail: {
             type: String
         }
     },

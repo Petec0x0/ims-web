@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 require('dotenv').config();
+const AuthRoute = require('./routes/auth');
 
 const app = express();
 
@@ -41,6 +42,8 @@ db.once('open', () => {
   console.log('Database connection established');
 })
 
+// Routes
+app.use('/api/auth', AuthRoute);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
