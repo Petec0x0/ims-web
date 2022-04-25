@@ -1,0 +1,49 @@
+const express = require("express");
+const path = require("path");
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
+const mongoose = require("mongoose");
+require('dotenv').config();
+
+const app = express();
+
+// parse requests of content-type - application/json
+app.use(express.json());
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+// // Increse file upload limit size
+// app.use(bodyParser.json({limit: '10mb', strict: false}));
+// app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+
+// middleware for parsing cookie from the request
+app.use(cookieParser());
+//When you navigate to the root page, it would use the built react-app
+app.use(express.static(path.resolve(__dirname, "../client/build")));
+// make a directory accessible as a public dir
+app.use('/uploads', express.static('uploads'));
+
+// Database connection
+// Store the DB_HOST value as a variable
+const DB_HOST = process.env.DB_HOST;
+mongoose.connect(DB_HOST, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+
+const db = mongoose.connection;
+
+db.on('error', (err) => {
+  console.log("PLEASE MAKE SURE YOU'RE CONNECTED TO THE INTERNET (DATABASE IS ON A REMOTE SERVER)")
+  console.log(err);
+})
+db.once('open', () => {
+  console.log('Database connection established');
+})
+
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});

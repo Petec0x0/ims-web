@@ -7,6 +7,11 @@ const salesSchema = new mongoose.Schema(
             required: true
         },
 
+        orderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order'
+        },
+
         productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
@@ -20,6 +25,11 @@ const salesSchema = new mongoose.Schema(
 
         subTotal: {
             type: Number
+        },
+
+        organizationId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organization'
         }
     },
     {

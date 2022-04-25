@@ -58,6 +58,11 @@ const productSchema = new mongoose.Schema(
         supplierId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Suplier'
+        },
+
+        organizationId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organization'
         }
     },
     {

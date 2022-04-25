@@ -12,6 +12,11 @@ const customerSchema = new mongoose.Schema(
         
         contact: {
             type: String
+        },
+
+        organizationId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organization'
         }
     },
     {

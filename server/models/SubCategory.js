@@ -8,6 +8,11 @@ const subCategorySchema = new mongoose.Schema(
 
         status: {
             type: String
+        },
+
+        organizationId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organization'
         }
     }, 
     {
