@@ -4,7 +4,8 @@ const productSchema = new mongoose.Schema(
     {
         referenceId: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
 
         productName: {
@@ -47,7 +48,7 @@ const productSchema = new mongoose.Schema(
             type: String
         },
         
-        thumbnail: {
+        thumbnailPath: {
             type: String
         },
 

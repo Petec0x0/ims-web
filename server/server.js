@@ -5,12 +5,13 @@ const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 require('dotenv').config();
 const verifyUser = require('./middlewares/verifyUser');
-const AuthRoute = require('./routes/auth');
-const BrandRoute = require('./routes/brand');
-const CategoryRoute = require('./routes/category');
-const CustomerRoute = require('./routes/customer');
-const SubCategoryRoute = require('./routes/subcategory');
-const SuplierRoute = require('./routes/suplier');
+const AuthRoute = require('./routes/auth.route');
+const BrandRoute = require('./routes/brand.route');
+const CategoryRoute = require('./routes/category.route');
+const CustomerRoute = require('./routes/customer.route');
+const SubCategoryRoute = require('./routes/subcategory.route');
+const SuplierRoute = require('./routes/suplier.route');
+const ProductRoute = require('./routes/product.route');
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use('/api/category', verifyUser, CategoryRoute);
 app.use('/api/customer', verifyUser, CustomerRoute);
 app.use('/api/subcategory', verifyUser, SubCategoryRoute);
 app.use('/api/suplier', verifyUser, SuplierRoute);
+app.use('/api/product', verifyUser, ProductRoute);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
