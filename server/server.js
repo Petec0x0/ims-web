@@ -7,6 +7,10 @@ require('dotenv').config();
 const verifyUser = require('./middlewares/verifyUser');
 const AuthRoute = require('./routes/auth');
 const BrandRoute = require('./routes/brand');
+const CategoryRoute = require('./routes/category');
+const CustomerRoute = require('./routes/customer');
+const SubCategoryRoute = require('./routes/subcategory');
+const SuplierRoute = require('./routes/suplier');
 
 const app = express();
 
@@ -47,6 +51,10 @@ db.once('open', () => {
 // Routes
 app.use('/api/auth', AuthRoute);
 app.use('/api/brand', verifyUser, BrandRoute);
+app.use('/api/category', verifyUser, CategoryRoute);
+app.use('/api/customer', verifyUser, CustomerRoute);
+app.use('/api/subcategory', verifyUser, SubCategoryRoute);
+app.use('/api/suplier', verifyUser, SuplierRoute);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

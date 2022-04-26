@@ -49,6 +49,54 @@ const onboard = async (req, res, next) => {
     }
 }
 
+const addUser = async (req, res, next) => {
+    /**
+     * This controller adds a new user to the organization 
+     * by the admin only
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+
+        const username = req.body.username;
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const email = req.body.email.trim().toLowerCase();
+        const privilegeLevel = req.body.privilegeLevel;
+        const organizationId = user.organizationId;
+
+        // make sure the user does not exist already
+        const checkuser = await User.findOne({ email: email });
+        // check if user exists
+        if (checkuser) {
+            return res.json({
+                message: 'Email address already in use',
+                error: true
+            })
+        } 
+
+        // create a new user object
+        await User.create({
+            username: username,
+            email: email,
+            password: hashedPassword,
+            privilegeLevel: privilegeLevel,
+            organizationId: organizationId
+        });
+
+        res.status(201).json({
+            message: 'User created successflly',
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
 const login = async (req, res, next) => {
     try {
         const email = req.body.email.trim().toLowerCase();
@@ -91,4 +139,4 @@ const login = async (req, res, next) => {
 
 }
 
-module.exports = { onboard, login }
+module.exports = { onboard, addUser, login }
