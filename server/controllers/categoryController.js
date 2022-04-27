@@ -33,9 +33,32 @@ const addCategory = async (req, res, next) => {
             error: true
         })
     }
-
-
 }   
+
+const getCategories = async (req, res, next) => {
+    /**
+     * This controller returns all the category 
+     * in the categories collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get categories
+        let categories = await Category.find({ organizationId: user.organizationId });
+        res.json({
+            data: categories,
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
 
 const updateCategory = async (req, res, next) => {
     /**
@@ -67,4 +90,4 @@ const updateCategory = async (req, res, next) => {
     }
 }
 
-module.exports = { addCategory, updateCategory };
+module.exports = { addCategory, getCategories, updateCategory };

@@ -33,9 +33,32 @@ const addSubCategory = async (req, res, next) => {
             error: true
         })
     }
-
-
 }   
+
+const getSubCategories = async (req, res, next) => {
+    /**
+     * This controller returns all the sub-categories 
+     * in the sub-categories collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get sub-categories
+        let sub_categories = await SubCategory.find({ organizationId: user.organizationId });
+        res.json({
+            data: sub_categories,
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
 
 const updateSubCategory = async (req, res, next) => {
     /**
@@ -67,4 +90,4 @@ const updateSubCategory = async (req, res, next) => {
     }
 }
 
-module.exports = { addSubCategory, updateSubCategory };
+module.exports = { addSubCategory, getSubCategories, updateSubCategory };

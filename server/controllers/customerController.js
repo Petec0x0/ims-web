@@ -41,6 +41,31 @@ const addCustomer = async (req, res, next) => {
 
 }   
 
+const getCustomers = async (req, res, next) => {
+    /**
+     * This controller returns all the customers 
+     * in the customers collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get customers
+        let customers = await Customer.find({ organizationId: user.organizationId });
+        res.json({
+            data: customers,
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+
 const updateCustomer = async (req, res, next) => {
     /**
      * This controller updates the a customer status
@@ -75,4 +100,4 @@ const updateCustomer = async (req, res, next) => {
     }
 }
 
-module.exports = { addCustomer, updateCustomer };
+module.exports = { addCustomer, getCustomers, updateCustomer };

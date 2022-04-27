@@ -97,6 +97,31 @@ const addUser = async (req, res, next) => {
     }
 }
 
+const getUsers = async (req, res, next) => {
+    /**
+     * This controller returns all the users 
+     * in the users collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get brands
+        let users = await User.find({ organizationId: user.organizationId });
+        res.json({
+            data: users,
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+
 const login = async (req, res, next) => {
     try {
         const email = req.body.email.trim().toLowerCase();
@@ -139,4 +164,4 @@ const login = async (req, res, next) => {
 
 }
 
-module.exports = { onboard, addUser, login }
+module.exports = { onboard, addUser, getUsers, login }

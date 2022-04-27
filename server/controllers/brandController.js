@@ -37,6 +37,30 @@ const addBrand = async (req, res, next) => {
 
 }   
 
+const getBrands = async (req, res, next) => {
+    /**
+     * This controller returns all the brand 
+     *  the brands collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get brands
+        let brands = await Brand.find({ organizationId: user.organizationId });
+        res.json({
+            data: brands,
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
 const updateBrand = async (req, res, next) => {
     /**
      * This controller updates the a brand status
@@ -67,4 +91,4 @@ const updateBrand = async (req, res, next) => {
     }
 }
 
-module.exports = { addBrand, updateBrand };
+module.exports = { addBrand, getBrands, updateBrand };

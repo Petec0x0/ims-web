@@ -5,7 +5,6 @@ const addProduct = async (req, res, next) => {
      * This controller adds a new product 
      * to the products collection
      */
-
     try {
         // find the authenticated user
         const user = res.locals.user;
@@ -47,7 +46,7 @@ const addProduct = async (req, res, next) => {
             message: 'Product added successflly',
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -57,4 +56,28 @@ const addProduct = async (req, res, next) => {
     }
 }
 
-module.exports = { addProduct };
+const getProducts = async (req, res, next) => {
+    /**
+     * This controller returns all the product 
+     * the products collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get products
+        let product = await Product.find({ organizationId: user.organizationId });
+        res.json({
+            data: product,
+            error: false
+        })
+
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addProduct, getProducts };

@@ -12,6 +12,7 @@ const CustomerRoute = require('./routes/customer.route');
 const SubCategoryRoute = require('./routes/subcategory.route');
 const SuplierRoute = require('./routes/suplier.route');
 const ProductRoute = require('./routes/product.route');
+const SalesRoute = require('./routes/sales.route');
 
 const app = express();
 
@@ -51,12 +52,14 @@ db.once('open', () => {
 
 // Routes
 app.use('/api/auth', AuthRoute);
-app.use('/api/brand', verifyUser, BrandRoute);
-app.use('/api/category', verifyUser, CategoryRoute);
-app.use('/api/customer', verifyUser, CustomerRoute);
-app.use('/api/subcategory', verifyUser, SubCategoryRoute);
-app.use('/api/suplier', verifyUser, SuplierRoute);
-app.use('/api/product', verifyUser, ProductRoute);
+app.use('/api/brands', verifyUser, BrandRoute);
+app.use('/api/categories', verifyUser, CategoryRoute);
+app.use('/api/customers', verifyUser, CustomerRoute);
+app.use('/api/subcategories', verifyUser, SubCategoryRoute);
+app.use('/api/supliers', verifyUser, SuplierRoute);
+app.use('/api/products', verifyUser, ProductRoute);
+app.use('/api/sales', verifyUser, SalesRoute);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

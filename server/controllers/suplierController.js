@@ -35,9 +35,32 @@ const addSuplier = async (req, res, next) => {
             error: true
         })
     }
-
-
 }   
+
+const getSupliers = async (req, res, next) => {
+    /**
+     * This controller returns all the suplier 
+     * in the supliers collection
+     */
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get supliers
+        let supliers = await Suplier.find({ organizationId: user.organizationId });
+        res.json({
+            data: supliers,
+            error: false
+        })
+        
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
 
 const updateSuplier = async (req, res, next) => {
     /**
@@ -71,4 +94,4 @@ const updateSuplier = async (req, res, next) => {
     }
 }
 
-module.exports = { addSuplier, updateSuplier };
+module.exports = { addSuplier, getSupliers, updateSuplier };
