@@ -3,7 +3,7 @@ const router = express.Router();
 const suplierController = require('../controllers/suplierController');
 
 router.get('', suplierController.getSupliers);
-router.post('/add-suplier', suplierController.addSuplier);
-router.post('/update-suplier', suplierController.updateSuplier);
+router.post('', suplierController.addSuplier);
+router.patch('', suplierController.updateSuplier);
 
 module.exports = router;
