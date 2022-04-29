@@ -70,7 +70,7 @@ const getSales = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
         // get sales
-        let sales = await Sales.find({ organizationId: user.organizationId });
+        let sales = await Sales.find({ organizationId: user.organizationId })//.populate('productId');
         res.json({
             data: sales,
             error: false
