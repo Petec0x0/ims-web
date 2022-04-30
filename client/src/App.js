@@ -4,6 +4,7 @@ import Login from "pages/Login";
 import Onboard from "pages/Onboard";
 import NotFound from "pages/NotFound";
 import DashboardLayout from "pages/DashboardLayout";
+import Overview from "pages/Overview";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
           <Route path="login" element={<Login />} />
         </Route>
         <Route path="dashboard/" element={<DashboardLayout />}>
-          
+          <Route index element={<Overview />} />
+          <Route path="overview" element={<Overview />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
