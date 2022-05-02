@@ -27,60 +27,62 @@ const DashboardLayout = () => {
                         <p className="text-center text-sm text-teal-600 mt-1 font-serif">DASHBOARD</p>
                     </div>
                 </div>
-                <div className="flex items-center space-x-4 mt-6 p-2 bg-teal-600 rounded-md">
-                    <div>
-                        <DashboardIcon />
+                <Link to="/dashboard/overview">
+                    <div className="flex items-center space-x-4 mt-6 p-2 bg-teal-600 rounded-md">
+                        <div>
+                            <DashboardIcon />
+                        </div>
+                        <div>
+                            <p className="text-lg text-white font-semibold">Dashboard</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className="text-lg text-white font-semibold">Dashboard</p>
-                    </div>
-                </div>
+                </Link>
                 <div className="mt-8">
                     <ul className="space-y-10">
                         <li>
-                            <Link to="/" className={`${(pathname.includes('inventory')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/inventory" className={`${(pathname.includes('inventory')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <InventoryIcon />
                                 Inventory
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('sales')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/sales" className={`${(pathname.includes('sales')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <SalesIcon />
                                 Sales
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('customers')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/customers" className={`${(pathname.includes('customers')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <CustomerIcon />
                                 Customers
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('suppliers')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/suppliers" className={`${(pathname.includes('suppliers')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <SupplierIcon />
                                 Suppliers
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('brands')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/brands" className={`${(pathname.includes('brands')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <BrandsIcon />
                                 Brands
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('categories')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/categories" className={`${(pathname.includes('categories')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <CategoriesIcon />
                                 Categories
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('sub-categories')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/sub-categories" className={`${(pathname.includes('sub-categories')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <CategoriesIcon />
                                 Sub-categories
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${(pathname.includes('settings')) ? 'text-teal-600':'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
+                            <Link to="/dashboard/" className={`${(pathname.includes('settings')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
                                 <SettingsIcon />
                                 Settings
                             </Link>

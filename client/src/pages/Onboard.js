@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from 'components/Alert';
+import ProgressBar from 'components/ProgressBar';
 
 const Onboard = () => {
   let navigate = useNavigate();
@@ -128,9 +129,7 @@ const Onboard = () => {
             {
               // show the progress bar if data is submited and being processed
               (submitted) ? (
-                <div className="w-full overflow-hidden">
-                  <div className="w-1/2 inline-block relative fluentProgressBar-waiting"></div>
-                </div>
+                <ProgressBar />
               ) : ""
             }
 
