@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import DashboardHeader from 'components/DashboardHeader';
 import AllInventory from 'components/AllInventory';
-import AddIcon from 'images/AddIcon';
 import AddInventory from 'components/AddInventory';
 
 const Inventory = () => {
@@ -15,7 +13,6 @@ const Inventory = () => {
 
   return (
     <div className="bg-teal-50 flex-grow py-12 px-10">
-      <DashboardHeader />
       <div className="w-full mt-4 rounded">
         {/* <!-- Tabs --> */}
         <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
@@ -26,7 +23,6 @@ const Inventory = () => {
           </li>
           <li className="px-4 py-2 font-semibold rounded-t">
             <button onClick={toggleTab} className={`${isAddItem ? 'bg-teal-600 text-white' : 'bg-white text-teal-700'} rounded-lg px-7 py-3 font-bold text-sm drop-shadow-lg`}>
-              <AddIcon />
               <span className="align-middle">Add Item</span>
             </button>
           </li>

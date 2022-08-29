@@ -36,7 +36,7 @@ const AllInventory = () => {
     }, []);
 
     return (
-        <>
+        <div className="w-full overflow-x-auto">
             <table className="min-w-max w-full table-auto">
                 <thead>
                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -119,7 +119,7 @@ const AllInventory = () => {
                     </>
                 ) : ''
             }
-        </>
+        </div>
 
     )
 }

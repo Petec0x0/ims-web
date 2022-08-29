@@ -1,12 +1,10 @@
 import React from 'react';
-import DashboardHeader from 'components/DashboardHeader';
 
 const Overview = () => {
     return (
-        <div className="bg-teal-50 flex-grow py-12 px-10">
-            <DashboardHeader />
+        <div className="bg-teal-50 flex-wrap py-12 px-10">
             <div>
-                <div className="flex space-x-4">
+                <div className="flex flex-col space-x-4 md:flex-row">
                     <div className="flex items-center justify-around p-6 bg-white w-64 rounded-xl space-x-2 mt-10 shadow-lg">
                         <div>
                             <span className="text-sm font-semibold text-gray-400">Total Sales</span>

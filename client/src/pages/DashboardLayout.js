@@ -1,104 +1,40 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { Link, useLocation } from 'react-router-dom';
-import DashboardIcon from 'images/DashboardIcon';
-import DashboardLogo from 'images/DashboardLogo';
-import InventoryIcon from 'images/InventoryIcon';
-import SalesIcon from 'images/SalesIcon';
-import CustomerIcon from 'images/CustomerIcon';
-import SupplierIcon from 'images/SupplierIcon';
-import BrandsIcon from 'images/BrandsIcon';
-import CategoriesIcon from 'images/CategoriesIcon';
-import SettingsIcon from 'images/SettingsIcon';
-import LogoutIcon from 'images/LogoutIcon';
+import React, { useState, useEffect } from 'react';
+import { Outlet, useLocation } from "react-router-dom";
+import AdminSidebar from 'components/AdminSidebar';
+import DashboardFooter from 'components/DashboardFooter';
+import DashboardHeader from 'components/DashboardHeader';
 
 const DashboardLayout = () => {
-    const { pathname } = useLocation();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    const toggleSidebar = (state = !isSidebarOpen) => {
+        setIsSidebarOpen(state);
+    }
+
+    // close the sidebar everytime a new page is opened
+    const location = useLocation();
+    useEffect(() => {
+        toggleSidebar(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.key]);
+
+    
     return (
-        <div className="min-h-screen flex">
-            <div className="py-12 px-10 w-1/4">
-                <div className="flex space-2 items-center border-b-2 pb-4">
-                    <div>
-                        <DashboardLogo />
-                    </div>
-                    <div className="ml-3">
-                        <h1 className="text-3xl font-bold text-teal-600">IMS</h1>
-                        <p className="text-center text-sm text-teal-600 mt-1 font-serif">DASHBOARD</p>
-                    </div>
-                </div>
-                <Link to="/dashboard/overview">
-                    <div className="flex items-center space-x-4 mt-6 p-2 bg-teal-600 rounded-md">
-                        <div>
-                            <DashboardIcon />
-                        </div>
-                        <div>
-                            <p className="text-lg text-white font-semibold">Dashboard</p>
-                        </div>
-                    </div>
-                </Link>
-                <div className="mt-8">
-                    <ul className="space-y-10">
-                        <li>
-                            <Link to="/dashboard/inventory" className={`${(pathname.includes('inventory')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <InventoryIcon />
-                                Inventory
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/sales" className={`${(pathname.includes('sales')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <SalesIcon />
-                                Sales
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/customers" className={`${(pathname.includes('customers')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <CustomerIcon />
-                                Customers
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/suppliers" className={`${(pathname.includes('suppliers')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <SupplierIcon />
-                                Suppliers
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/brands" className={`${(pathname.includes('brands')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <BrandsIcon />
-                                Brands
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/categories" className={`${(pathname.includes('categories')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <CategoriesIcon />
-                                Categories
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/sub-categories" className={`${(pathname.includes('sub-categories')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <CategoriesIcon />
-                                Sub-categories
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/dashboard/" className={`${(pathname.includes('settings')) ? 'text-teal-600' : 'text-gray-500'} flex items-center text-sm font-semibold hover:text-teal-600 transition duration-200`}>
-                                <SettingsIcon />
-                                Settings
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-                <div className="flex mt-20 space-x-4 items-center">
-                    <div>
-                        <LogoutIcon />
-                    </div>
-                    <Link to="/" className="block font-semibold text-gray-500 hover:text-teal-600 transition duration-200">Logout</Link>
+        <div>
+            <DashboardHeader
+                toggleSidebar={toggleSidebar}
+                isSidebarOpen={isSidebarOpen}
+            />
+            <div className="flex overflow-hidden bg-white pt-16">
+                <AdminSidebar
+                    isSidebarOpen={isSidebarOpen}
+                />
+                <div className={`bg-gray-900 opacity-50 ${isSidebarOpen ? '' : 'hidden'} fixed inset-0 z-10`} id="sidebarBackdrop"></div>
+                <div id="main-content" className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+                    <Outlet />
+                    <DashboardFooter />
                 </div>
             </div>
-
-            <Outlet />
-
         </div>
     )
 }
