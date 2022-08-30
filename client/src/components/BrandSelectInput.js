@@ -18,6 +18,7 @@ const BrandSelectInput = ({ handleFormInput }) => {
             if (status === 401) {
                 // redirect to login page
                 navigate("/login");
+                return false;
             }
             // check if there is an error in the response
             if (content.error) {

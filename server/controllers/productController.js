@@ -100,4 +100,34 @@ const getProducts = async (req, res, next) => {
     }
 }
 
-module.exports = { addProduct, getProducts };
+const searchProduct = async (req, res, next) => {
+    /**
+     * This controller returns the searched product 
+     * the products collection
+     */
+
+    const searchString = req.query.query;
+
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get products
+        let product = await Product.find({ 
+            organizationId: user.organizationId, 
+            productName: { $regex: '.*' + searchString + '.*', $options: '-i' } 
+        });
+        res.json({
+            data: product,
+            error: false
+        })
+
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addProduct, getProducts, searchProduct };

@@ -12,6 +12,7 @@ import Inventory from "pages/Inventory";
 import Sales from "pages/Sales";
 import SubCategories from "pages/SubCategories";
 import Suppliers from "pages/Suppliers";
+import Invoice from "pages/Invoice";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="sub-categories" element={<SubCategories />} />
           <Route path="suppliers" element={<Suppliers />} />
         </Route>
+        <Route path="invoice/:reference" element={<Invoice />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -10,7 +10,7 @@ const AllInventory = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        // send a post request to the server to fetch customers
+        // send a get request to the server to fetch products
         (async () => {
             const rawResponse = await fetch('/api/products', {
                 method: 'GET',
@@ -21,6 +21,7 @@ const AllInventory = () => {
             if (status === 401) {
                 // redirect to login page
                 navigate("/login");
+                return false;
             }
             // check if there is an error in the response
             if (content.error) {
