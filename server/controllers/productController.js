@@ -9,17 +9,9 @@ const addProduct = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        // get the number of douments in products
-        const pro_count = await Product.countDocuments();
-        // use the current count plus 1 as the next reference number
-        let referenceId;
-        if(pro_count < 10){
-            referenceId = `PRO-00${pro_count+1}`;
-        }else if(pro_count < 100){
-            referenceId = `PRO-0${pro_count+1}`;
-        }else{
-            referenceId = `PRO-${pro_count+1}`;
-        }
+        // Create product reference from timestamp
+        let referenceId = `PRO${(new Date()).getTime().toString()}`;
+        
 
         const productName = req.body.productName;
         const description = req.body.description;
@@ -114,7 +106,8 @@ const searchProduct = async (req, res, next) => {
         // get products
         let product = await Product.find({ 
             organizationId: user.organizationId, 
-            productName: { $regex: '.*' + searchString + '.*', $options: '-i' } 
+            productName: { $regex: '.*' + searchString + '.*', $options: '-i' },
+            quantity: { $gt: 0 } 
         });
         res.json({
             data: product,

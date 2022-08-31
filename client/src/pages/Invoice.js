@@ -66,7 +66,7 @@ const Invoice = () => {
                     </div>
                     <hr className="my-2" />
                     <div className="flex text-xs font-semibold">
-                        <div className="flex-grow">CHANGE</div>
+                        <div className="flex-grow">BALANCE</div>
                         <div x-text="priceFormat(change)">₦. 70.000</div>
                     </div>
                 </div>

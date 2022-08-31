@@ -6,10 +6,10 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        
+
         orderDate: {
             type: Date,
-            default: () => Date.now() + 7*24*60*60*1000
+            default: () => Date.now() + 7 * 24 * 60 * 60 * 1000
         },
 
         salesPersonId: {
@@ -25,7 +25,12 @@ const orderSchema = new mongoose.Schema(
 
         grandTotal: {
             type: Number
-        }
+        },
+
+        sales: [{
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Sales'
+        }]
     },
     {
         timestamps: true

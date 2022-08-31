@@ -10,13 +10,13 @@ const Cart = () => {
 
     const handleSearchItem = (e) => {
         const query = e.target.value;
+        setQueryString(e.target.value);
         // exit function if query is empty
         if (!query) {
             // empty query items list
             setQueryItems([]);
             return false;
         }
-        setQueryString(e.target.value);
 
         // send a get request to the server to fetch products
         (async () => {
@@ -91,7 +91,8 @@ const Cart = () => {
     // for monitoring when a http request is sent
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSaveOrder = () => {
+    const handleSaveOrder = (e) => {
+        e.preventDefault();
         // make sure cartItems is not empty before continuing
         if (!Object.values(cartItems).length) {
             // exit function
@@ -108,11 +109,6 @@ const Cart = () => {
                 subTotal: (item.sellingPrice * item.count),
             }
         });
-
-
-
-        const WinPrint = window.open(`${baseUrl}/invoice/ORD${(new Date()).getTime().toString()}`, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-        WinPrint.data = cartItems;
 
         setSubmitted(true);
         // send a post request to the server
@@ -133,14 +129,15 @@ const Cart = () => {
                 )
             });
             const content = await rawResponse.json();
-            console.log(content);
             // stop the progress bar
             setSubmitted(false);
             // check if there is an error in the response
             if (content.error) {
                 alert(content.message);
             } else {
-
+                const WinPrint = window.open(`${baseUrl}/invoice/ORD${(new Date()).getTime().toString()}`, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                WinPrint.data = cartItems;
+                setCartItems({});
             }
         })();
     }
