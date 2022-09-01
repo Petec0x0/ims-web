@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import waitingIllustration from 'images/waiting-for-customer.svg';
 
 const SuppliersList = () => {
+  let navigate = useNavigate();
   const [supliers, setSupliers] = useState([]);
 
   useEffect(() => {
@@ -15,14 +17,22 @@ const SuppliersList = () => {
         }
       });
       const content = await rawResponse.json();
+      const status = rawResponse.status;
+      // Redirect the user to login page if status == 401
+      if (status === 401) {
+        // redirect to login page
+        navigate("/login");
+        return false;
+      }
       // check if there is an error in the response
       if (content.error) {
-
+        alert(content.message);
       } else {
         // update supliers state
         setSupliers([...content.data]);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -61,9 +71,9 @@ const SuppliersList = () => {
                         <td className="px-4 py-3 text-sm">
                           {
                             (suplier.status === 'available') ?
-                            <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">{suplier.status}</span>
-                            :
-                            <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">{suplier.status}</span>                            
+                              <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">{suplier.status}</span>
+                              :
+                              <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">{suplier.status}</span>
                           }
                         </td>
                         <td className="px-4 py-3">
@@ -83,7 +93,7 @@ const SuppliersList = () => {
                       </tr>
                     )
                   })
-                ) : ''
+                ) : <tr></tr>
               }
             </tbody>
           </table>

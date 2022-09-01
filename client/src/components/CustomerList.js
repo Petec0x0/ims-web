@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import waitingIllustration from 'images/waiting-for-customer.svg';
 
 const CustomerList = () => {
+  let navigate = useNavigate();
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
@@ -15,14 +17,22 @@ const CustomerList = () => {
         }
       });
       const content = await rawResponse.json();
+      const status = rawResponse.status;
+      // Redirect the user to login page if status == 401
+      if (status === 401) {
+        // redirect to login page
+        navigate("/login");
+        return false;
+      }
       // check if there is an error in the response
       if (content.error) {
-
+        alert(content.message);
       } else {
         // update customers state
         setCustomers([...content.data]);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -78,7 +88,7 @@ const CustomerList = () => {
                       </tr>
                     )
                   })
-                ) : ''
+                ) : <tr></tr>
               }
             </tbody>
           </table>

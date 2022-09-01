@@ -11,7 +11,6 @@ const addCustomer = async (req, res, next) => {
         const user = res.locals.user;
 
         const customerName = req.body.customerName;
-        const status = req.body.status;
         const organizationId = user.organizationId;
         const customerContact = req.body.customerContact;
         const customerAddress = req.body.customerAddress;
@@ -19,7 +18,6 @@ const addCustomer = async (req, res, next) => {
         // create a new customer object
         await Customer.create({
             customerName,
-            status,
             organizationId,
             customerContact,
             customerAddress

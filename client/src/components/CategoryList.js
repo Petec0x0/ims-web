@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import waitingIllustration from 'images/waiting-for-customer.svg';
 
 const CategoryList = () => {
+  let navigate = useNavigate();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -15,14 +17,22 @@ const CategoryList = () => {
         }
       });
       const content = await rawResponse.json();
+      const status = rawResponse.status;
+      // Redirect the user to login page if status == 401
+      if (status === 401) {
+        // redirect to login page
+        navigate("/login");
+        return false;
+      }
       // check if there is an error in the response
       if (content.error) {
-
+        alert(content.message);
       } else {
         // update categories state
         setCategories([...content.data]);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -79,7 +89,7 @@ const CategoryList = () => {
                       </tr>
                     )
                   })
-                ) : ''
+                ) : <tr></tr>
               }
             </tbody>
           </table>

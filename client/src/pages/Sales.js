@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import waitingIllustration from 'images/waiting-for-customer.svg';
 
 const Sales = () => {
   const baseUrl = `${window.location.origin}`;
+  let navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState({});
   const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
   const [orders, setOrders] = useState([]);
@@ -60,14 +62,22 @@ const Sales = () => {
         }
       });
       const content = await rawResponse.json();
+      const status = rawResponse.status;
+      // Redirect the user to login page if status == 401
+      if (status === 401) {
+        // redirect to login page
+        navigate("/login");
+        return false;
+      }
       // check if there is an error in the response
       if (content.error) {
-
+        alert(content.message);
       } else {
         // update orders state
         setOrders([...content.data]);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -122,20 +132,20 @@ const Sales = () => {
                       </tr>
                     )
                   })
-                ) : ''
+                ) : <tr></tr>
               }
             </tbody>
           </table>
           {
-                (orders === undefined || orders.length === 0) ? (
-                    <>
-                        <h3 className="text-center text-gray-600 p-4 text-lg">Your sales will appear here</h3>
-                        <div className="flex">
-                            <img className="self-center mx-auto" src={waitingIllustration} alt="illustration" />
-                        </div>
-                    </>
-                ) : ''
-            }
+            (orders === undefined || orders.length === 0) ? (
+              <>
+                <h3 className="text-center text-gray-600 p-4 text-lg">Your sales will appear here</h3>
+                <div className="flex">
+                  <img className="self-center mx-auto" src={waitingIllustration} alt="illustration" />
+                </div>
+              </>
+            ) : ''
+          }
         </div>
         <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t bg-gray-50 sm:grid-cols-9 ">
           <span className="flex items-center col-span-3">
