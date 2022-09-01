@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 import waitingIllustration from 'images/waiting-for-customer.svg';
 
-const AllInventory = () => {
+const InventoryList = () => {
     const baseUrl = `${window.location.origin}`;
     let navigate = useNavigate();
     const [isDataReady, setIsDataReady] = useState(false);
@@ -113,7 +113,7 @@ const AllInventory = () => {
             {
                 (products === undefined || products.length === 0) ? (
                     <>
-                        <h3 className="text-center text-gray-600 p-4 text-lg">Your customers will appear here</h3>
+                        <h3 className="text-center text-gray-600 p-4 text-lg">Your inventory will appear here</h3>
                         <div className="flex">
                             <img className="self-center mx-auto" src={waitingIllustration} alt="illustration" />
                         </div>
@@ -125,4 +125,4 @@ const AllInventory = () => {
     )
 }
 
-export default AllInventory;
+export default InventoryList;

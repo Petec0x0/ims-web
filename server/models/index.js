@@ -5,7 +5,6 @@ const Order = require('./Order');
 const Organization = require('./Organization');
 const Product = require('./Product');
 const Sales = require('./Sales');
-const SubCategory = require('./SubCategory');
 const Suplier = require('./Suplier');
 const User = require('./User');
 
@@ -17,7 +16,6 @@ module.exports = {
     Organization,
     Product,
     Sales,
-    SubCategory,
     Suplier,
     User
 }

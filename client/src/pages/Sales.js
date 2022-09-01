@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import waitingIllustration from 'images/waiting-for-customer.svg';
 
 const Sales = () => {
   const baseUrl = `${window.location.origin}`;
@@ -70,12 +71,13 @@ const Sales = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="md:mx-16">
       <div className="w-full overflow-hidden rounded-lg shadow-xs">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             <thead>
               <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50 ">
+                <th className="px-4 py-3">#</th>
                 <th className="px-4 py-3">Reference</th>
                 <th className="px-4 py-3">Total Payment</th>
                 {/* <th className="px-4 py-3">Payment Status</th> */}
@@ -88,6 +90,9 @@ const Sales = () => {
                   orders.map((order, index) => {
                     return (
                       <tr key={index} onClick={() => toggleOrderDetails({ ...order, index: index })} className="text-gray-700 cursor-pointer hover:bg-gray-200">
+                        <td className="px-4 py-3 text-sm">
+                          {index + 1}
+                        </td>
                         <td className="px-4 py-3">
                           <div className="flex items-center text-sm">
                             <div>
@@ -117,17 +122,20 @@ const Sales = () => {
                       </tr>
                     )
                   })
-                ) : (
-                  <tr>
-                    <td>
-                      <div className="text-center text-lg font-bold">No transaction available</div>
-                    </td>
-                  </tr>
-
-                )
+                ) : ''
               }
             </tbody>
           </table>
+          {
+                (orders === undefined || orders.length === 0) ? (
+                    <>
+                        <h3 className="text-center text-gray-600 p-4 text-lg">Your sales will appear here</h3>
+                        <div className="flex">
+                            <img className="self-center mx-auto" src={waitingIllustration} alt="illustration" />
+                        </div>
+                    </>
+                ) : ''
+            }
         </div>
         <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t bg-gray-50 sm:grid-cols-9 ">
           <span className="flex items-center col-span-3">
@@ -146,7 +154,7 @@ const Sales = () => {
                   </button>
                 </li>
                 <li>
-                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
+                  <button className="px-3 py-1 text-white transition-colors duration-150 bg-teal-600 border border-r-0 border-teal-600 rounded-md focus:outline-none focus:shadow-outline-teal">
                     1
                   </button>
                 </li>
@@ -156,7 +164,7 @@ const Sales = () => {
                   </button>
                 </li>
                 <li>
-                  <button className="px-3 py-1 text-white transition-colors duration-150 bg-teal-600 border border-r-0 border-teal-600 rounded-md focus:outline-none focus:shadow-outline-teal">
+                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
                     3
                   </button>
                 </li>

@@ -10,9 +10,9 @@ import Categories from "pages/Categories";
 import Customers from "pages/Customers";
 import Inventory from "pages/Inventory";
 import Sales from "pages/Sales";
-import SubCategories from "pages/SubCategories";
 import Suppliers from "pages/Suppliers";
 import Invoice from "pages/Invoice";
+import Cart from "pages/Cart";
 
 function App() {
   return (
@@ -26,12 +26,12 @@ function App() {
         <Route path="dashboard/" element={<DashboardLayout />}>
           <Route index element={<Overview />} />
           <Route path="overview" element={<Overview />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="brands" element={<Brands />} />
           <Route path="categories" element={<Categories />} />
           <Route path="customers" element={<Customers />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="sales" element={<Sales />} />
-          <Route path="sub-categories" element={<SubCategories />} />
           <Route path="suppliers" element={<Suppliers />} />
         </Route>
         <Route path="invoice/:reference" element={<Invoice />} />

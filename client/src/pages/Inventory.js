@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AllInventory from 'components/AllInventory';
+import InventoryList from 'components/InventoryList';
 import AddInventory from 'components/AddInventory';
 
 const Inventory = () => {
@@ -31,7 +31,7 @@ const Inventory = () => {
         {/* <!-- Tab Contents --> */}
         <div id="tab-contents">
           <div className={`${isAllItems ? '' : 'hidden'} p-4`}>
-            <AllInventory />
+            <InventoryList />
           </div>
           <div className={`${isAddItem ? '' : 'hidden'} p-4`}>
             <AddInventory />

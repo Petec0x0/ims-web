@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const DashboardHeader = ({ toggleSidebar, isSidebarOpen }) => {
+const DashboardHeader = ({ toggleSidebar, isSidebarOpen, toggleHideSidebar, isSidebarHidden }) => {
     return (
         <nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -22,26 +22,16 @@ const DashboardHeader = ({ toggleSidebar, isSidebarOpen }) => {
                             <span className="ml-2 text-primary font-bold text-xl">WCD</span>
                         </Link>
                     </div>
-                    {/* <div className="flex items-center">
-                        <button id="toggleSidebarMobileSearch" type="button" className="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
-                            <span className="sr-only">Search</span>
-                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
+                    <div className="items-center flex">
+                        <Link to="cart" className="inline-flex ml-5 text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:ring-teal-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mx-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                             </svg>
-                        </button>
-                        <div className="hidden lg:flex items-center">
-                            <span className="text-base font-normal text-gray-500 mr-5">Open source ❤️</span>
-                            <div className="-mb-1">
-                                <a className="github-button" href="/#" data-color-scheme="no-preference: dark; light: light; dark: light;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themesberg/windster-tailwind-css-dashboard on GitHub">Star</a>
-                            </div>
-                        </div>
-                        <a href="/#" className="hidden sm:inline-flex ml-5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-                            <svg className="svg-inline--fa fa-gem -ml-1 mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="gem" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path fill="currentColor" d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path>
-                            </svg>
-                            Upgrade to Pro
-                        </a>
-                    </div> */}
+                        </Link>
+                        <span onClick={toggleHideSidebar} href="/#" className="hidden lg:inline-flex ml-5 text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:ring-teal-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                            {isSidebarHidden ? 'Show Sidebar' : 'Hide Sidebar'}
+                        </span>
+                    </div>
                 </div>
             </div>
         </nav>
