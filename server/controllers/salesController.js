@@ -86,7 +86,8 @@ const getSales = async (req, res, next) => {
                 populate: {
                     path: 'productId'
                 }
-            });
+            })
+            .sort({ createdAt: -1 });
 
         res.json({
             data: sales,

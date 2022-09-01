@@ -39,7 +39,7 @@ const addCustomer = async (req, res, next) => {
     }
 
 
-}   
+}
 
 const getCustomers = async (req, res, next) => {
     /**
@@ -50,12 +50,13 @@ const getCustomers = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
         // get customers
-        let customers = await Customer.find({ organizationId: user.organizationId });
+        let customers = await Customer.find({ organizationId: user.organizationId })
+            .sort({ customerName: 1 });
         res.json({
             data: customers,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -79,7 +80,7 @@ const updateCustomer = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        let customer = await Customer.findOne({_id: customerId, organizationId: user.organizationId});
+        let customer = await Customer.findOne({ _id: customerId, organizationId: user.organizationId });
         // update
         customer.status = status;
         customer.customerContact = customerContact;
@@ -90,7 +91,7 @@ const updateCustomer = async (req, res, next) => {
             data: customer,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({

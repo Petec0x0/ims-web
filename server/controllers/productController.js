@@ -77,7 +77,8 @@ const getProducts = async (req, res, next) => {
         // get products
         let product = await Product.find({ organizationId: user.organizationId })
             .populate('brandId')
-            .populate('categoryId');
+            .populate('categoryId')
+            .sort({productName:1});
         res.json({
             data: product,
             error: false

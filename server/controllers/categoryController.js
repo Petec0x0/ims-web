@@ -33,7 +33,7 @@ const addCategory = async (req, res, next) => {
             error: true
         })
     }
-}   
+}
 
 const getCategories = async (req, res, next) => {
     /**
@@ -44,12 +44,13 @@ const getCategories = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
         // get categories
-        let categories = await Category.find({ organizationId: user.organizationId });
+        let categories = await Category.find({ organizationId: user.organizationId })
+            .sort({ categoryName: 1 });
         res.json({
             data: categories,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -71,7 +72,7 @@ const updateCategory = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        let category = await Category.findOne({_id: categoryId, organizationId: user.organizationId});
+        let category = await Category.findOne({ _id: categoryId, organizationId: user.organizationId });
         // update
         category.status = status;
         category.save();
@@ -80,7 +81,7 @@ const updateCategory = async (req, res, next) => {
             data: category,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({

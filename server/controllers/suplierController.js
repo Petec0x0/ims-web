@@ -35,7 +35,7 @@ const addSuplier = async (req, res, next) => {
             error: true
         })
     }
-}   
+}
 
 const getSupliers = async (req, res, next) => {
     /**
@@ -46,12 +46,13 @@ const getSupliers = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
         // get supliers
-        let supliers = await Suplier.find({ organizationId: user.organizationId });
+        let supliers = await Suplier.find({ organizationId: user.organizationId })
+            .sort({ suplierName: 1 });
         res.json({
             data: supliers,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -74,7 +75,7 @@ const updateSuplier = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        let suplier = await Suplier.findOne({_id: suplierId, organizationId: user.organizationId});
+        let suplier = await Suplier.findOne({ _id: suplierId, organizationId: user.organizationId });
         // update
         suplier.status = status;
         suplier.suplierContact = suplierContact;
@@ -84,7 +85,7 @@ const updateSuplier = async (req, res, next) => {
             data: suplier,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({

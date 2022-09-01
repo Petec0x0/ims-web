@@ -35,7 +35,7 @@ const addBrand = async (req, res, next) => {
     }
 
 
-}   
+}
 
 const getBrands = async (req, res, next) => {
     /**
@@ -46,12 +46,13 @@ const getBrands = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
         // get brands
-        let brands = await Brand.find({ organizationId: user.organizationId });
+        let brands = await Brand.find({ organizationId: user.organizationId })
+            .sort({ brandName: 1 });
         res.json({
             data: brands,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -72,7 +73,7 @@ const updateBrand = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        let brand = await Brand.findOne({_id: brandId, organizationId: user.organizationId});
+        let brand = await Brand.findOne({ _id: brandId, organizationId: user.organizationId });
         // update
         brand.status = status;
         brand.save();
@@ -81,7 +82,7 @@ const updateBrand = async (req, res, next) => {
             data: brand,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
