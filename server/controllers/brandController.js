@@ -73,7 +73,10 @@ const updateBrand = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        let brand = await Brand.findOne({ _id: brandId, organizationId: user.organizationId });
+        let brand = await Brand.findOne({
+            _id: brandId,
+            organizationId: user.organizationId
+        });
         // update
         brand.status = status;
         brand.save();
@@ -91,5 +94,32 @@ const updateBrand = async (req, res, next) => {
         })
     }
 }
+    
+const deleteBrand = async (req, res, next) => {
+    /**
+     * This controller delete a brand
+     */
+    try {
+        const brandId = req.body.brandId;
+        // find the authenticated user
+        const user = res.locals.user;
 
-module.exports = { addBrand, getBrands, updateBrand };
+        let brand = await Brand.findOneAndDelete({
+            _id: brandId,
+            organizationId: user.organizationId
+        });
+
+        return res.json({
+            data: brand,
+            error: false
+        })
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addBrand, getBrands, updateBrand, deleteBrand };

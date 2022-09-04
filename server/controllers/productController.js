@@ -11,7 +11,7 @@ const addProduct = async (req, res, next) => {
 
         // Create product reference from timestamp
         let referenceId = `PRO${(new Date()).getTime().toString()}`;
-        
+
 
         const productName = req.body.productName;
         const description = req.body.description;
@@ -27,9 +27,9 @@ const addProduct = async (req, res, next) => {
         const organizationId = user.organizationId;
         // check if the user uploaded an image
         let thumbnailPath;
-        if(req.file){
+        if (req.file) {
             thumbnailPath = req.file.path;
-        }else {
+        } else {
             // add a default image if no image was uploaded
             thumbnailPath = 'uploads/thumbnails/product-placeholder.svg';
         }
@@ -78,7 +78,7 @@ const getProducts = async (req, res, next) => {
         let product = await Product.find({ organizationId: user.organizationId })
             .populate('brandId')
             .populate('categoryId')
-            .sort({productName:1});
+            .sort({ productName: 1 });
         res.json({
             data: product,
             error: false
@@ -105,10 +105,10 @@ const searchProduct = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
         // get products
-        let product = await Product.find({ 
-            organizationId: user.organizationId, 
+        let product = await Product.find({
+            organizationId: user.organizationId,
             productName: { $regex: '.*' + searchString + '.*', $options: '-i' },
-            quantity: { $gt: 0 } 
+            quantity: { $gt: 0 }
         });
         res.json({
             data: product,
@@ -124,4 +124,70 @@ const searchProduct = async (req, res, next) => {
     }
 }
 
-module.exports = { addProduct, getProducts, searchProduct };
+const updateProduct = async (req, res, next) => {
+    /**
+     * This controller updates the a product category, brand, quantity, sellingPrice
+     */
+
+    try {
+        const productId = req.body.productId;
+        const productName = req.body.productName;
+        const purchasedPrice = req.body.purchasedPrice;
+        const quantity = req.body.quantity;
+        const sellingPrice = req.body.sellingPrice;
+        // find the authenticated user
+        const user = res.locals.user;
+
+        let product = await Product.findOne({
+            _id: productId,
+            organizationId: user.organizationId
+        });
+        // update
+        product.productName = productName;
+        product.purchasedPrice = purchasedPrice;
+        product.quantity = quantity;
+        product.sellingPrice = sellingPrice;
+        product.save();
+
+        res.json({
+            data: product,
+            error: false
+        })
+
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+const deleteProduct = async (req, res, next) => {
+    /**
+     * This controller delete a product
+     */
+    try {
+        const productId = req.body.productId;
+        // find the authenticated user
+        const user = res.locals.user;
+
+        let product = await Product.findOneAndDelete({
+            _id: productId,
+            organizationId: user.organizationId
+        });
+
+        return res.json({
+            data: product,
+            error: false
+        })
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addProduct, getProducts, searchProduct, updateProduct, deleteProduct };

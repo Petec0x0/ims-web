@@ -91,4 +91,31 @@ const updateCategory = async (req, res, next) => {
     }
 }
 
-module.exports = { addCategory, getCategories, updateCategory };
+const deleteCategory = async (req, res, next) => {
+    /**
+     * This controller delete a category
+     */
+    try {
+        const categoryId = req.body.categoryId;
+        // find the authenticated user
+        const user = res.locals.user;
+
+        let category = await Category.findOneAndDelete({
+            _id: categoryId,
+            organizationId: user.organizationId
+        });
+
+        return res.json({
+            data: category,
+            error: false
+        })
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addCategory, getCategories, updateCategory, deleteCategory };

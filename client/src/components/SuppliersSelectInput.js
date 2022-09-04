@@ -37,7 +37,7 @@ const SuppliersSelectInput = ({handleFormInput}) => {
         <div className="w-full flex flex-col mb-3">
             <label className="font-semibold text-gray-600 py-2">Supplier</label>
             <select onChange={handleFormInput} className="block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 md:w-full " required="required" name="supplierId">
-                <option value="">Selete or type to search suppliers</option>
+                <option value="">Select or type to search suppliers</option>
                 {
                     // if data is not ready diplay spinners else diplay the table
                     !isDataReady ? (

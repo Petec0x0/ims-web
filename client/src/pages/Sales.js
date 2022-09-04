@@ -210,7 +210,7 @@ const Sales = () => {
         {/* // render only when or has a value */}
         {
           !!(Object.values(orderDetails).length) &&
-          <div id="default-modal" data-modal-show="true" aria-hidden="true" className={`${isOrderDetailsOpen ? 'flex' : 'hidden'} modal bg-overlay flex flex-col justify-start items-center fixed z-50 h-full w-full inset-0 visible opacity-100 transition-all-300 overflow-auto`}>
+          <div data-modal-show="true" aria-hidden="true" className={`${isOrderDetailsOpen ? 'flex' : 'hidden'} modal bg-overlay flex flex-col justify-start items-center fixed z-50 h-full w-full inset-0 visible opacity-100 transition-all-300 overflow-auto`}>
             <div className="flex justify-center my-10 w-full">
               <div className="scale-100 w-[900px] min-w-[250px] bg-gray-200 rounded-lg px-3 pb-3 pt-7 mx-3 md:m-5 relative">
                 <button onClick={() => toggleOrderDetails(orderDetails)} className="absolute top-0 right-0 sm:text-white sm:bg-primary sm:hover:bg-teal-500 transition-all-300 sm:top-[-10px] sm:right-[-10px] sm:rounded-lg p-2">
@@ -241,17 +241,17 @@ const Sales = () => {
                           return (
                             <span key={index} className="cursor-pointer bg-white hover:bg-gray-100 flex flex-col sm:flex-row justify-between items-center gap-5 w-full p-2" href="/#">
                               <div className="border rounded-lg h-[40px] w-[40px] min-w-[40px] overflow-hidden">
-                                <img className="w-full h-full object-cover" src={`${baseUrl}/${item.productId.thumbnailPath}`} alt="product" />
+                                <img className="w-full h-full object-cover" src={`${baseUrl}/${ (item.productId) ? item.productId.thumbnailPath : '[Deleted]'}`} alt="product" />
                               </div>
                               <div className="flex flex-col w-full">
-                                <h6 className="font-semibold text-lg clamp-2 break-all">{item.productId.productName}</h6>
+                                <h6 className="font-semibold text-lg clamp-2 break-all">{ (item.productId) ? item.productId.productName : '[Deleted]'}</h6>
                                 <div className="flex gap-2">
                                   <div className="flex gap-1 leading-7 text-gray-400">
                                     <span>{item.quantity}</span>
                                     <span>X</span>
                                   </div>
                                   <div className="flex items-center">
-                                    <span className="font-bold text-primary">₦{item.productId.sellingPrice}</span>
+                                    <span className="font-bold text-primary">₦{ (item.productId) ? item.productId.sellingPrice : '[Deleted]'}</span>
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
@@ -288,9 +288,9 @@ const Sales = () => {
                       <span>₦{orderDetails.grandTotal}</span>
                     </div>
                   </div>
-                  <a className="btn-close-modal btn-effect w-max ml-auto bg-primary text-white uppercase font-bold rounded-lg p-2 px-3" href="/#">
+                  <button onClick={() => toggleOrderDetails(orderDetails)} className="btn-close-modal btn-effect w-max ml-auto bg-primary text-white uppercase font-bold rounded-lg p-2 px-3" href="/#">
                     <span className="text-center">Close</span>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

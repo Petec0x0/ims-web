@@ -95,4 +95,31 @@ const updateSuplier = async (req, res, next) => {
     }
 }
 
-module.exports = { addSuplier, getSupliers, updateSuplier };
+const deleteSuplier = async (req, res, next) => {
+    /**
+     * This controller delete a suplier
+     */
+    try {
+        const suplierId = req.body.suplierId;
+        // find the authenticated user
+        const user = res.locals.user;
+
+        let suplier = await Suplier.findOneAndDelete({
+            _id: suplierId,
+            organizationId: user.organizationId
+        });
+
+        return res.json({
+            data: suplier,
+            error: false
+        })
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addSuplier, getSupliers, updateSuplier, deleteSuplier };

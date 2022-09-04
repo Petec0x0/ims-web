@@ -92,6 +92,7 @@ const AddCategory = () => {
                     <div className="relative">
                       <label htmlFor="message" className="leading-7 text-sm text-gray-600">Status</label>
                       <select onChange={handleFormInput} type="text" id="status" name="status" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        <option value="">Select status</option>
                         <option value="available">Available</option>
                         <option value="unavailable">Unavailable</option>
                       </select>

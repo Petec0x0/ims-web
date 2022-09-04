@@ -99,4 +99,31 @@ const updateCustomer = async (req, res, next) => {
     }
 }
 
-module.exports = { addCustomer, getCustomers, updateCustomer };
+const deleteCustomer = async (req, res, next) => {
+    /**
+     * This controller delete a customer
+     */
+    try {
+        const customerId = req.body.customerId;
+        // find the authenticated user
+        const user = res.locals.user;
+
+        let customer = await Customer.findOneAndDelete({
+            _id: customerId,
+            organizationId: user.organizationId
+        });
+
+        return res.json({
+            data: customer,
+            error: false
+        })
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+module.exports = { addCustomer, getCustomers, updateCustomer, deleteCustomer };
