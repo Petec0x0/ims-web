@@ -1,2 +1,2 @@
 # ims-web
-Inventory Managment System with React and Nodejs
+An Inventory Managment System for tracking inventory levels, orders, sales and deliveries.
