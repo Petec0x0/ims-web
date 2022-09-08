@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const suplierSchema = new mongoose.Schema(
+const supplierSchema = new mongoose.Schema(
     {
-        suplierName: {
+        supplierName: {
             type: String
         },
 
-        suplierContact: {
+        supplierContact: {
             type: String
         },
 
@@ -24,5 +24,5 @@ const suplierSchema = new mongoose.Schema(
     }
 );
 
-const Suplier = mongoose.model('Suplier', suplierSchema);
-module.exports = Suplier;
+const Supplier = mongoose.model('Supplier', supplierSchema);
+module.exports = Supplier;

@@ -9,7 +9,7 @@ const AuthRoute = require('./routes/auth.route');
 const BrandRoute = require('./routes/brand.route');
 const CategoryRoute = require('./routes/category.route');
 const CustomerRoute = require('./routes/customer.route');
-const SuplierRoute = require('./routes/suplier.route');
+const SupplierRoute = require('./routes/supplier.route');
 const ProductRoute = require('./routes/product.route');
 const SalesRoute = require('./routes/sales.route');
 
@@ -54,7 +54,7 @@ app.use('/api/auth', AuthRoute);
 app.use('/api/brands', verifyUser, BrandRoute);
 app.use('/api/categories', verifyUser, CategoryRoute);
 app.use('/api/customers', verifyUser, CustomerRoute);
-app.use('/api/supliers', verifyUser, SuplierRoute);
+app.use('/api/suppliers', verifyUser, SupplierRoute);
 app.use('/api/products', verifyUser, ProductRoute);
 app.use('/api/sales', verifyUser, SalesRoute);
 

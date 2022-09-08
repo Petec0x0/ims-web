@@ -9,7 +9,7 @@ const SuppliersSelectInput = ({handleFormInput}) => {
     useEffect(() => {
         // send a post request to the server to fetch customers
         (async () => {
-            const rawResponse = await fetch('/api/supliers', {
+            const rawResponse = await fetch('/api/suppliers', {
                 method: 'GET',
             });
             const content = await rawResponse.json();
@@ -44,7 +44,7 @@ const SuppliersSelectInput = ({handleFormInput}) => {
                         <option value=""></option>
                     ) : (
                         suppliers.map((supplier, i) => {
-                            return <option key={i} value={supplier._id}>{supplier.suplierName}</option>
+                            return <option key={i} value={supplier._id}>{supplier.supplierName}</option>
                         })
                     )
                 }

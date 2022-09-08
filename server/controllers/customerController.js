@@ -72,7 +72,6 @@ const updateCustomer = async (req, res, next) => {
 
     try {
         const customerId = req.body.customerId;
-        const status = req.body.status;
         const customerContact = req.body.customerContact;
         const customerAddress = req.body.customerAddress;
         // find the authenticated user
@@ -80,7 +79,6 @@ const updateCustomer = async (req, res, next) => {
 
         let customer = await Customer.findOne({ _id: customerId, organizationId: user.organizationId });
         // update
-        customer.status = status;
         customer.customerContact = customerContact;
         customer.customerAddress = customerAddress;
         customer.save();

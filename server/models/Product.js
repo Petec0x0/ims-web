@@ -58,7 +58,7 @@ const productSchema = new mongoose.Schema(
 
         supplierId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Suplier'
+            ref: 'Supplier'
         },
 
         organizationId: {

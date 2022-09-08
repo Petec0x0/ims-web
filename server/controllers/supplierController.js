@@ -1,8 +1,8 @@
-const { Suplier } = require('../models');
+const { Supplier } = require('../models');
 
-const addSuplier = async (req, res, next) => {
+const addSupplier = async (req, res, next) => {
     /**
-     * This controller adds a new suplier to an
+     * This controller adds a new supplier to an
      * organizations categories list
      */
 
@@ -10,21 +10,21 @@ const addSuplier = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        const suplierName = req.body.suplierName;
+        const supplierName = req.body.supplierName;
         const status = req.body.status;
         const organizationId = user.organizationId;
-        const suplierContact = req.body.suplierContact;
+        const supplierContact = req.body.supplierContact;
 
-        // create a new suplier object
-        await Suplier.create({
-            suplierName,
+        // create a new supplier object
+        await Supplier.create({
+            supplierName,
             status,
             organizationId,
-            suplierContact
+            supplierContact
         });
 
         res.status(201).json({
-            message: 'Suplier created successflly',
+            message: 'Supplier created successflly',
             error: false
         })
 
@@ -37,19 +37,19 @@ const addSuplier = async (req, res, next) => {
     }
 }
 
-const getSupliers = async (req, res, next) => {
+const getSuppliers = async (req, res, next) => {
     /**
-     * This controller returns all the suplier 
-     * in the supliers collection
+     * This controller returns all the supplier 
+     * in the suppliers collection
      */
     try {
         // find the authenticated user
         const user = res.locals.user;
-        // get supliers
-        let supliers = await Suplier.find({ organizationId: user.organizationId })
-            .sort({ suplierName: 1 });
+        // get suppliers
+        let suppliers = await Supplier.find({ organizationId: user.organizationId })
+            .sort({ supplierName: 1 });
         res.json({
-            data: supliers,
+            data: suppliers,
             error: false
         })
 
@@ -63,26 +63,26 @@ const getSupliers = async (req, res, next) => {
 }
 
 
-const updateSuplier = async (req, res, next) => {
+const updateSupplier = async (req, res, next) => {
     /**
-     * This controller updates the a suplier status
+     * This controller updates the a supplier status
      */
 
     try {
-        const suplierId = req.body.suplierId;
+        const supplierId = req.body.supplierId;
         const status = req.body.status;
-        const suplierContact = req.body.suplierContact;
+        const supplierContact = req.body.supplierContact;
         // find the authenticated user
         const user = res.locals.user;
 
-        let suplier = await Suplier.findOne({ _id: suplierId, organizationId: user.organizationId });
+        let supplier = await Supplier.findOne({ _id: supplierId, organizationId: user.organizationId });
         // update
-        suplier.status = status;
-        suplier.suplierContact = suplierContact;
-        suplier.save();
+        supplier.status = status;
+        supplier.supplierContact = supplierContact;
+        supplier.save();
 
         res.json({
-            data: suplier,
+            data: supplier,
             error: false
         })
 
@@ -95,22 +95,22 @@ const updateSuplier = async (req, res, next) => {
     }
 }
 
-const deleteSuplier = async (req, res, next) => {
+const deleteSupplier = async (req, res, next) => {
     /**
-     * This controller delete a suplier
+     * This controller delete a supplier
      */
     try {
-        const suplierId = req.body.suplierId;
+        const supplierId = req.body.supplierId;
         // find the authenticated user
         const user = res.locals.user;
 
-        let suplier = await Suplier.findOneAndDelete({
-            _id: suplierId,
+        let supplier = await Supplier.findOneAndDelete({
+            _id: supplierId,
             organizationId: user.organizationId
         });
 
         return res.json({
-            data: suplier,
+            data: supplier,
             error: false
         })
     } catch (err) {
@@ -122,4 +122,4 @@ const deleteSuplier = async (req, res, next) => {
     }
 }
 
-module.exports = { addSuplier, getSupliers, updateSuplier, deleteSuplier };
+module.exports = { addSupplier, getSuppliers, updateSupplier, deleteSupplier };

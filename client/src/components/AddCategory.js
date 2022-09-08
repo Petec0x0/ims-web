@@ -85,13 +85,13 @@ const AddCategory = () => {
                   <div className="p-2 md:w-1/2">
                     <div className="relative">
                       <label htmlFor="name" className="leading-7 text-sm text-gray-600">Category Name</label>
-                      <input onChange={handleFormInput} type="text" id="categoryName" name="categoryName" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                      <input onChange={handleFormInput} type="text" id="categoryName" name="categoryName" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" />
                     </div>
                   </div>
                   <div className="p-2 md:w-1/2">
                     <div className="relative">
                       <label htmlFor="message" className="leading-7 text-sm text-gray-600">Status</label>
-                      <select onChange={handleFormInput} type="text" id="status" name="status" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                      <select onChange={handleFormInput} type="text" id="status" name="status" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4">
                         <option value="">Select status</option>
                         <option value="available">Available</option>
                         <option value="unavailable">Unavailable</option>
