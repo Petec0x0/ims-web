@@ -68,10 +68,15 @@ const InventoryList = () => {
         })();
     }
 
+    const [query, setQuery] = useState('');
+    const handleSearchItem = (e) => {
+        setQuery(e.target.value);
+    }
+
     useEffect(() => {
         // send a get request to the server to fetch products
         (async () => {
-            const rawResponse = await fetch('/api/products', {
+            const rawResponse = await fetch(`/api/products?query=${query}`, {
                 method: 'GET',
             });
             const content = await rawResponse.json();
@@ -95,10 +100,18 @@ const InventoryList = () => {
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [query]);
 
     return (
         <div className="w-full overflow-x-auto">
+            <div className="md:w-[584px] mx-auto bg-white m-2 flex w-[92%] items-center rounded-full border hover:shadow-md">
+                <div className="pl-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <input onChange={handleSearchItem} type="text" className="w-full bg-white rounded-full py-[14px] pl-4 outline-none" />
+            </div>
             <table className="min-w-max w-full table-auto">
                 <thead>
                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">

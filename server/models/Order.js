@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
 
         orderDate: {
             type: Date,
-            default: () => Date.now() + 7 * 24 * 60 * 60 * 1000
+            default: () => Date.now() + 1 * 24 * 60 * 60 * 1000
         },
 
         salesPersonId: {

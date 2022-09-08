@@ -71,11 +71,17 @@ const getProducts = async (req, res, next) => {
      * This controller returns all the product 
      * the products collection
      */
+
+    const searchString = req.query.query;
+
     try {
         // find the authenticated user
         const user = res.locals.user;
         // get products
-        let product = await Product.find({ organizationId: user.organizationId })
+        let product = await Product.find({
+            organizationId: user.organizationId,
+            productName: { $regex: '.*' + searchString + '.*', $options: '-i' },
+        })
             .populate('brandId')
             .populate('categoryId')
             .sort({ productName: 1 });

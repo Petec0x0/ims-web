@@ -5,6 +5,21 @@ import waitingIllustration from 'images/waiting-for-customer.svg';
 const Sales = () => {
   const baseUrl = `${window.location.origin}`;
   let navigate = useNavigate();
+
+  // eslint-disable-next-line no-extend-native  
+  Date.prototype.yyyymmdd = function () {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+
+    return [this.getFullYear(),
+    (mm > 9 ? '' : '0') + mm,
+    (dd > 9 ? '' : '0') + dd
+    ].join('-');
+  };
+
+  const [startDate, setStartDate] = useState(`${new Date(new Date().setDate(new Date().getDate() - 5)).yyyymmdd()}`);
+  const [endDate, setEndDate] = useState(`${new Date(new Date().setDate(new Date().getDate() + 1)).yyyymmdd()}`);
+
   const [orderDetails, setOrderDetails] = useState({});
   const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
   const [orders, setOrders] = useState([]);
@@ -54,7 +69,7 @@ const Sales = () => {
   useEffect(() => {
     // send a get request to the server to fetch ORDERS
     (async () => {
-      const rawResponse = await fetch(`/api/sales`, {
+      const rawResponse = await fetch(`/api/sales?startDate=${startDate}&endDate=${endDate}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -78,11 +93,32 @@ const Sales = () => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [startDate, endDate]);
 
   return (
     <div className="md:mx-16">
       <div className="w-full overflow-hidden rounded-lg shadow-xs">
+
+        <div className="flex items-center justify-center py-4">
+          <div className="relative">
+            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
+              </svg>
+            </div>
+            <input onChange={(e) => { setStartDate(e.target.value) }} value={startDate} name="startDate" type="date" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date start" />
+          </div>
+          <span className="mx-4 text-gray-500">to</span>
+          <div className="relative">
+            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
+              </svg>
+            </div>
+            <input onChange={(e) => { setEndDate(e.target.value) }} value={endDate} name="endDate" type="date" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date end" />
+          </div>
+        </div>
+
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             <thead>
@@ -147,66 +183,7 @@ const Sales = () => {
             ) : ''
           }
         </div>
-        <div className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t bg-gray-50 sm:grid-cols-9 ">
-          <span className="flex items-center col-span-3">
-            Showing 21-30 of 100
-          </span>
-          <span className="col-span-2"></span>
-          {/* <!-- Pagination --> */}
-          <span className="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-            <nav aria-label="Table navigation">
-              <ul className="inline-flex items-center">
-                <li>
-                  <button className="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-teal" aria-label="Previous">
-                    <svg aria-hidden="true" className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                      <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" fillRule="evenodd"></path>
-                    </svg>
-                  </button>
-                </li>
-                <li>
-                  <button className="px-3 py-1 text-white transition-colors duration-150 bg-teal-600 border border-r-0 border-teal-600 rounded-md focus:outline-none focus:shadow-outline-teal">
-                    1
-                  </button>
-                </li>
-                <li>
-                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
-                    2
-                  </button>
-                </li>
-                <li>
-                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
-                    3
-                  </button>
-                </li>
-                <li>
-                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
-                    4
-                  </button>
-                </li>
-                <li>
-                  <span className="px-3 py-1">...</span>
-                </li>
-                <li>
-                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
-                    8
-                  </button>
-                </li>
-                <li>
-                  <button className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-teal">
-                    9
-                  </button>
-                </li>
-                <li>
-                  <button className="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-teal" aria-label="Next">
-                    <svg className="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                      <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" fillRule="evenodd"></path>
-                    </svg>
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </span>
-        </div>
+
         {/* // render only when or has a value */}
         {
           !!(Object.values(orderDetails).length) &&
@@ -241,17 +218,17 @@ const Sales = () => {
                           return (
                             <span key={index} className="cursor-pointer bg-white hover:bg-gray-100 flex flex-col sm:flex-row justify-between items-center gap-5 w-full p-2" href="/#">
                               <div className="border rounded-lg h-[40px] w-[40px] min-w-[40px] overflow-hidden">
-                                <img className="w-full h-full object-cover" src={`${baseUrl}/${ (item.productId) ? item.productId.thumbnailPath : '[Deleted]'}`} alt="product" />
+                                <img className="w-full h-full object-cover" src={`${baseUrl}/${(item.productId) ? item.productId.thumbnailPath : '[Deleted]'}`} alt="product" />
                               </div>
                               <div className="flex flex-col w-full">
-                                <h6 className="font-semibold text-lg clamp-2 break-all">{ (item.productId) ? item.productId.productName : '[Deleted]'}</h6>
+                                <h6 className="font-semibold text-lg clamp-2 break-all">{(item.productId) ? item.productId.productName : '[Deleted]'}</h6>
                                 <div className="flex gap-2">
                                   <div className="flex gap-1 leading-7 text-gray-400">
                                     <span>{item.quantity}</span>
                                     <span>X</span>
                                   </div>
                                   <div className="flex items-center">
-                                    <span className="font-bold text-primary">₦{ (item.productId) ? item.productId.sellingPrice : '[Deleted]'}</span>
+                                    <span className="font-bold text-primary">₦{(item.productId) ? item.productId.sellingPrice : '[Deleted]'}</span>
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">

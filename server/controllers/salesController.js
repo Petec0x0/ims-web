@@ -76,11 +76,20 @@ const getSales = async (req, res, next) => {
      * This controller returns all the sales 
      * in the sales collection
      */
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+
     try {
         // find the authenticated user
         const user = res.locals.user;
         // get sales
-        let sales = await Order.find({ organizationId: user.organizationId })
+        let sales = await Order.find({
+            organizationId: user.organizationId,
+            orderDate: {
+                "$gte": new Date(startDate),
+                "$lt": new Date(endDate)
+            }
+        })
             .populate({
                 path: 'sales',
                 populate: {

@@ -12,7 +12,7 @@ const Customers = () => {
   }
 
   return (
-    <div className="bg-teal-50 flex-grow py-12 px-10">
+    <div className="bg-teal-50 flex-grow py-2 px-10">
       <div className="w-full mt-4 rounded">
         {/* <!-- Tabs --> */}
         <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
