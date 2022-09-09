@@ -1,25 +1,40 @@
 import React from 'react';
 
 const Invoice = () => {
+    const referenceId = window.referenceId || '';
+    const paidAmount = window.paidAmount || 0;
     const cartItems = window.data || {};
+
     const cartTotalAmount = Object.values(cartItems).reduce((prev, item) => (
         prev + (item.sellingPrice * item.count)
     ), 0);
     console.log(cartItems);
 
+    // eslint-disable-next-line no-extend-native  
+    Date.prototype.yyyymmdd = function () {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [
+            (dd > 9 ? '' : '0') + dd,
+            (mm > 9 ? '' : '0') + mm,
+            this.getFullYear(),
+        ].join('/');
+    };
+
     return (
         <>
-            <div id="receipt-content" className="text-left mx-auto w-1/3 text-sm p-6 overflow-auto">
+            <div id="receipt-content" className="text-left mx-auto w-1/2 text-sm p-6 overflow-auto">
                 <div className="text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-teal-500 rounded-full inline-block" viewBox="0 0 24 24">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                     </svg>
-                    <h2 className="text-xl font-semibold">WCD</h2>
-                    <p>CABANG KONOHA SELATAN</p>
+                    <h2 className="text-xl font-semibold">Wine Cave & Drinks</h2>
+                    <p>Shop number 8 Nipost shopping mall total roundabout, Nsukka.</p>
                 </div>
                 <div className="flex mt-4 text-xs">
-                    <div className="flex-grow">No: <span x-text="receiptNo">TWPOS-KS-1661881019</span></div>
-                    <div x-text="receiptDate">30/08/22 18.36</div>
+                    <div className="flex-grow">No: <span x-text="receiptNo">{referenceId}</span></div>
+                    <div x-text="receiptDate">{new Date().yyyymmdd()}</div>
                 </div>
                 <hr className="my-2" />
                 <div>
@@ -39,7 +54,7 @@ const Invoice = () => {
                                 Object.values(cartItems).map((item, index) => {
                                     return (
                                         <tr key={index} className="even:bg-gray-100 odd:bg-gray-200">
-                                            <td className="py-2 text-center">{index+1}</td>
+                                            <td className="py-2 text-center">{index + 1}</td>
                                             <td className="py-2 text-left">
                                                 <span x-text="item.name">{item.productName}</span>
                                                 <br />
@@ -62,12 +77,12 @@ const Invoice = () => {
                     </div>
                     <div className="flex text-xs font-semibold">
                         <div className="flex-grow">PAY AMOUNT</div>
-                        <div x-text="priceFormat(cash)">₦. 100.000</div>
+                        <div x-text="priceFormat(cash)">₦. {paidAmount}</div>
                     </div>
                     <hr className="my-2" />
                     <div className="flex text-xs font-semibold">
                         <div className="flex-grow">BALANCE</div>
-                        <div x-text="priceFormat(change)">₦. 70.000</div>
+                        <div x-text="priceFormat(change)">₦. {paidAmount - cartTotalAmount}</div>
                     </div>
                 </div>
             </div>

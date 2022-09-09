@@ -88,8 +88,16 @@ const Cart = () => {
         setCartItems({ ...otherItems });
     }
 
+    // for storing customers paid amount
+    const [paidAmount, setPaidAmount] = useState(0);
+    const handlePaidAmount = (e) => {
+        // get the paid amount from input Onchange
+        setPaidAmount(e.target.value);
+    }
+
     // for monitoring when a http request is sent
     const [submitted, setSubmitted] = useState(false);
+    
 
     const handleSaveOrder = (e) => {
         e.preventDefault();
@@ -135,8 +143,12 @@ const Cart = () => {
             if (content.error) {
                 alert(content.message);
             } else {
-                const WinPrint = window.open(`${baseUrl}/invoice/ORD${(new Date()).getTime().toString()}`, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                const WinPrint = window.open(`${baseUrl}/invoice/${content.data.referenceId}`, '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
                 WinPrint.data = cartItems;
+                // send reciept-No./Order-reference
+                WinPrint.referenceId = content.data.referenceId;
+                // send customers paid amount too
+                WinPrint.paidAmount = paidAmount;
                 setCartItems({});
             }
         })();
@@ -318,7 +330,7 @@ const Cart = () => {
                             <span>Total:</span>
                             <span>₦{cartTotalAmount}</span>
                         </div>
-
+                        <input onChange={handlePaidAmount} placeholder="Customer Paid Amount" type="text" id="payAmount" name="payAmount" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4 my-4" />
                         {
                             // show the progress bar if data is submited and being processed
                             (submitted) ? (

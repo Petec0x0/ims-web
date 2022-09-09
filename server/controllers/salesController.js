@@ -59,6 +59,7 @@ const addSales = async (req, res, next) => {
 
         res.status(201).json({
             message: 'Sales recorded successflly',
+            data: order,
             error: false
         })
 
@@ -85,7 +86,7 @@ const getSales = async (req, res, next) => {
         // get sales
         let sales = await Order.find({
             organizationId: user.organizationId,
-            orderDate: {
+            createdAt: {
                 "$gte": new Date(startDate),
                 "$lt": new Date(endDate)
             }

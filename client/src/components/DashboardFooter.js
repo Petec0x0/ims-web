@@ -40,7 +40,7 @@ const DashboardFooter = () => {
                 </div>
             </footer>
             <p className="text-center text-sm text-gray-500 my-10">
-                &copy; 2022 <a href="/#" className="hover:underline" target="_blank">WCD</a>. All rights reserved.
+                &copy; 2022 <a href="/#" className="hover:underline" target="_blank">Wine Cave & Drinks</a>. All rights reserved.
             </p>
         </>
   )
