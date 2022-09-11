@@ -12,6 +12,7 @@ const CustomerRoute = require('./routes/customer.route');
 const SupplierRoute = require('./routes/supplier.route');
 const ProductRoute = require('./routes/product.route');
 const SalesRoute = require('./routes/sales.route');
+const StatsRoute = require('./routes/stats.route');
 
 const app = express();
 
@@ -51,6 +52,7 @@ db.once('open', () => {
 
 // Routes
 app.use('/api/auth', AuthRoute);
+app.use('/api/stats', verifyUser, StatsRoute);
 app.use('/api/brands', verifyUser, BrandRoute);
 app.use('/api/categories', verifyUser, CategoryRoute);
 app.use('/api/customers', verifyUser, CustomerRoute);
