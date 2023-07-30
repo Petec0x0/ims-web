@@ -80,7 +80,7 @@ const getProducts = async (req, res, next) => {
         // get products
         let product = await Product.find({
             organizationId: user.organizationId,
-            productName: { $regex: '.*' + searchString + '.*', $options: '-i' },
+            productName: { $regex: '.*' + searchString + '.*', $options: 'i' },
         })
             .populate('brandId')
             .populate('categoryId')
@@ -113,7 +113,7 @@ const searchProduct = async (req, res, next) => {
         // get products
         let product = await Product.find({
             organizationId: user.organizationId,
-            productName: { $regex: '.*' + searchString + '.*', $options: '-i' },
+            productName: { $regex: '.*' + searchString + '.*', $options: 'i' },
             quantity: { $gt: 0 }
         });
         res.json({
