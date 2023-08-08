@@ -59,6 +59,10 @@ app.use('/api/customers', verifyUser, CustomerRoute);
 app.use('/api/suppliers', verifyUser, SupplierRoute);
 app.use('/api/products', verifyUser, ProductRoute);
 app.use('/api/sales', verifyUser, SalesRoute);
+// When a path is not found, return the build( frontend ) part.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+})
 
 
 // set port, listen for requests
