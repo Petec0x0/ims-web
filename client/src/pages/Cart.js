@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from 'components/ProgressBar';
 
@@ -97,7 +97,7 @@ const Cart = () => {
 
     // for monitoring when a http request is sent
     const [submitted, setSubmitted] = useState(false);
-    
+
 
     const handleSaveOrder = (e) => {
         e.preventDefault();
@@ -153,6 +153,59 @@ const Cart = () => {
             }
         })();
     }
+
+    useEffect(() => {
+        const handleBarcodeInput = (event) => {
+            if (event.key === 'Enter') {
+                // Barcode scanning is complete, process the barcode
+                handleBarcodeScanned(queryString);
+            }
+        };
+
+        window.addEventListener('keydown', handleBarcodeInput);
+
+        return () => {
+            window.removeEventListener('keydown', handleBarcodeInput);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [queryString]);
+
+    const isEmpty = (obj) => {
+        for (var prop in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                return false;
+            }
+        }
+        return true
+    }
+
+
+    const handleBarcodeScanned = async (scannedBarcode) => {
+        // send a get request to the server to find product
+        (async () => {
+            const rawResponse = await fetch(`/api/products/find?referenceId=${scannedBarcode}`, {
+                method: 'GET',
+            });
+            const content = await rawResponse.json();
+            const status = rawResponse.status;
+            // Redirect the user to login page if status == 401
+            if (status === 401) {
+                // redirect to login page
+                navigate("/login");
+                return false;
+            }
+            // check if there is an error in the response
+            if (content.error) {
+                alert(content.message);
+            } else {
+                // check if object is empty
+                if (!isEmpty(content.data)) {
+                    // update cart
+                    handleAddToCart(content.data);
+                }
+            }
+        })();
+    };
 
     return (
         <div className="px-4 py-1">

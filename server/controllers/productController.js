@@ -9,9 +9,17 @@ const addProduct = async (req, res, next) => {
         // find the authenticated user
         const user = res.locals.user;
 
-        // Create product reference from timestamp
-        let referenceId = `PRO${(new Date()).getTime().toString()}`;
-
+        /**
+         * The referenceId is serving as Barcode storage.
+         * If it does not exit, create one from time stamp
+         */
+        let referenceId;
+        if (req.body.referenceId) {
+            referenceId = req.body.referenceId;
+        } else {
+            // Create product reference from timestamp
+            referenceId = `PRO${(new Date()).getTime().toString()}`;
+        }
 
         const productName = req.body.productName;
         const description = req.body.description;
@@ -85,6 +93,34 @@ const getProducts = async (req, res, next) => {
             .populate('brandId')
             .populate('categoryId')
             .sort({ productName: 1 });
+        res.json({
+            data: product,
+            error: false
+        })
+
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: 'An error occured',
+            error: true
+        })
+    }
+}
+
+const getOneProductByReference = async (req, res) => {
+    /**
+     * This controller returns a single based 
+     * on the provided refereceId or barcode
+     */
+    const referenceId = req.query.referenceId;
+    try {
+        // find the authenticated user
+        const user = res.locals.user;
+        // get products
+        let product = await Product.findOne({
+            organizationId: user.organizationId,
+            referenceId: referenceId
+        });
         res.json({
             data: product,
             error: false
@@ -196,4 +232,11 @@ const deleteProduct = async (req, res, next) => {
     }
 }
 
-module.exports = { addProduct, getProducts, searchProduct, updateProduct, deleteProduct };
+module.exports = {
+    addProduct,
+    getProducts,
+    searchProduct,
+    updateProduct,
+    deleteProduct,
+    getOneProductByReference
+};

@@ -47,3 +47,46 @@ code {
     left: 100%;
   }
 }
+
+
+/* For printing invoice documents */
+
+.print-content {
+  font-size: 10px;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+}
+
+.print-content h2 {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.print-content p {
+  font-size: 8px;
+  margin: 0;
+}
+
+.print-content table {
+  width: 100%;
+}
+
+.print-content th,
+.print-content td {
+  font-size: 8px;
+  padding: 2px;
+  border: none;
+}
+
+.print-content .text-left,
+.print-content .text-center,
+.print-content .text-right {
+  text-align: left;
+}
+
+.print-content .w-1\/12,
+.print-content .w-2\/12,
+.print-content .w-3\/12 {
+  width: auto;
+}

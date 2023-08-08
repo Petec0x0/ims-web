@@ -113,6 +113,12 @@ const AddInventory = () => {
                                     </label>
                                 </div>
                             </div>
+                            <div className="md:flex md:flex-row md:space-x-4 w-full text-xs">
+                                <div className="w-full flex flex-col mb-3">
+                                    <label className="font-semibold text-gray-600 py-2">Barcode</label>
+                                    <input onChange={handleFormInput} placeholder="Place your cursor here and scan the product barcode" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg h-10 px-4" type="text" name="referenceId" />
+                                </div>
+                            </div>
                             <div className="md:flex flex-row md:space-x-4 w-full text-xs">
                                 <div className="mb-3 space-y-2 w-full text-xs">
                                     <label className="font-semibold text-gray-600 py-2">Product  Name <abbr title="required">*</abbr></label>
