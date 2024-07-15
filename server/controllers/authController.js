@@ -19,7 +19,7 @@ const onboard = async (req, res, next) => {
                 message: 'Email address already in use',
                 error: true
             })
-        } 
+        }
 
         const organization = await Organization.create({
             organizationName: req.body.organizationName,
@@ -72,7 +72,7 @@ const addUser = async (req, res, next) => {
                 message: 'Email address already in use',
                 error: true
             })
-        } 
+        }
 
         // create a new user object
         await User.create({
@@ -87,7 +87,7 @@ const addUser = async (req, res, next) => {
             message: 'User created successflly',
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -111,7 +111,7 @@ const getUsers = async (req, res, next) => {
             data: users,
             error: false
         })
-        
+
     } catch (err) {
         console.log(err);
         return res.json({
@@ -148,10 +148,15 @@ const login = async (req, res, next) => {
         const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         // send the token through cookie in the response
         res.cookie('token', token, { httpOnly: true });
+
+        // get uuser's organization
+        const { organizationName } = await Organization.findOne({ creatorEmail: email });
+
         res.json({
             message: 'User loggedin successflly',
             error: false,
-            token: token
+            token: token,
+            data: {organizationName}
         })
 
     } catch (err) {
