@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from "js-cookie";
 import Alert from 'components/Alert';
 import ProgressBar from 'components/ProgressBar';
 
@@ -60,6 +61,8 @@ const Login = () => {
           setErroMsg(content.message);
           setError(true);
         } else {
+          // get organizations name
+          Cookies.set('organizationName', content.data.organizationName);
           // redirect to login page
           navigate("/dashboard/overview");
         }

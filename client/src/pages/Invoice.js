@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from "js-cookie";
 
 const Invoice = () => {
     const referenceId = window.referenceId || '';
@@ -21,7 +22,8 @@ const Invoice = () => {
             this.getFullYear(),
         ].join('/');
     };
-
+    
+    const organizationName = Cookies.get("organizationName");
     return (
         <>
             <div id="receipt-content" className="print-content text-left mx-auto w-1/2 text-sm p-6 overflow-auto">
@@ -29,8 +31,8 @@ const Invoice = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-teal-500 rounded-full inline-block" viewBox="0 0 24 24">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                     </svg>
-                    <h2 className="text-xl font-semibold">Wine Cave & Drinks</h2>
-                    <p>Shop number 8 Nipost shopping mall total roundabout, Nsukka.</p>
+                    <h2 className="text-xl font-semibold">{organizationName}</h2>
+                    <p>IN/20 Emene Industrial Layout, Enugu East Local Government Area.</p>
                 </div>
                 <div className="flex mt-4 text-xs">
                     <div className="flex-grow">No: <span x-text="receiptNo">{referenceId}</span></div>
