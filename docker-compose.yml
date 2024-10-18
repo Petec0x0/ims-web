@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+      - "3000:3000"
+    depends_on:
+      - mongo
+    secrets:
+      - db_host
+      - jwt_secret
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+
+secrets:
+  db_host:
+    file: ./secrets/db_host.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
